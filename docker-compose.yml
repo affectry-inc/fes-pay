@@ -1,0 +1,19 @@
+version: '2'
+services:
+  app:
+    build: .
+    command: npm start
+    depends_on:
+      - db
+    ports:
+      - "${PORT}:${PORT}"
+    volumes:
+      - .:/home/xiz/app
+      - /home/xiz/app/node_modules
+    env_file: .env
+  db:
+    image: mongo:3.4.2
+    ports:
+      - '27017:27017'
+    volumes:
+      - ./data/db:/data/db

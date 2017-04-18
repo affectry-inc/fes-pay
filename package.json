@@ -1,0 +1,33 @@
+{
+  "name": "fes-pay",
+  "version": "1.0.0",
+  "description": "Best payment on any fes",
+  "main": "src/index.js",
+  "engines": {
+    "node": "6.10.0",
+    "npm": "3.10.10"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/affectry-inc/fes-pay.git"
+  },
+  "keywords": [
+    "fes",
+    "payment"
+  ],
+  "author": "xiz-tky",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/affectry-inc/fes-pay/issues"
+  },
+  "homepage": "https://github.com/affectry-inc/fes-pay#readme",
+  "dependencies": {
+    "express": "^4.15.2",
+    "monk": "^4.0.0",
+    "request": "^2.79.0"
+  }
+}

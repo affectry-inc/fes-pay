@@ -5,7 +5,7 @@ var app = express();
 var MongoUrl = process.env.MONGODB_URI || 'mongodb://db:27017/fes-pay';
 var db = require('./lib/mongo')(
       {
-        collections: ['events', 'tenants', 'users'],
+        collections: ['events', 'tenants', 'users', 'cards'],
         mongoUri: MongoUrl
       }
     );
@@ -62,8 +62,63 @@ app.post('/create', function(req, res) {
   res.send('USER saved - name:' + req.body.name);
 });
 
+app.get('/user/me', function(req, res) {
+  res.send('it\'s me');
+});
+
 app.get('/user/:id', function(req, res) {
   db.users.get(req.params.id, function(err, user){
-    res.render('user', {user: user})
+    if (user) {
+      res.render('user', {user: user})
+    } else {
+      res.send('nobody');
+    }
+  });
+});
+
+
+app.get('/yeah', function(req, res) {
+  res.render('yeah', {});
+});
+
+app.post('/yeah', function(req, res) {
+  res.redirect('/yeah/' + req.body.card_id);
+});
+
+app.get('/yeah/:card_id', function(req, res) {
+  db.cards.get(req.params.card_id, function(err, card){
+    if (card) {
+      res.render('edit_card', {action: 'update_card', card_id: req.params.card_id});
+    } else {
+      res.render('edit_card', {action: 'create_card', card_id: req.params.card_id})
+    }
+  });
+});
+
+app.post('/create_card/:card_id', function(req, res) {
+  card = {};
+  card.id = req.params.card_id;
+  card.cardno = req.body.cardno;
+  card.month = req.body.month;
+  card.year = req.body.year;
+  db.cards.save(card);
+
+  res.send('CARD SAVED');
+});
+
+app.post('/update_card/:card_id', function(req, res) {
+  db.cards.get(req.params.card_id, function(err, card){
+    card.cardno = req.body.cardno;
+    card.month = req.body.month;
+    card.year = req.body.year;
+    db.cards.save(card);
+
+    res.send('CARD UPDATED');
+  });
+});
+
+app.get('/cards', function(req, res) {
+  db.cards.all(function(err, cards){
+    res.send(cards);
   });
 });

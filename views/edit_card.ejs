@@ -1,0 +1,18 @@
+<html>
+<body>
+  <h1>Save credit card for ID: <%= card_id %></h1>
+
+  <form method="post" action="/<%= action %>/<%= card_id %>">
+    <label>Credit Card number</label>
+    <input type="text" name="cardno">
+    <br>
+    <label>Expiration Month</label>
+    <input type="number" name="month">
+    <br>
+    <label>Expiration Year</label>
+    <input type="number" name="year">
+    <br>
+    <input type="submit" value="SAVE">
+  </form>
+</body>
+</html>

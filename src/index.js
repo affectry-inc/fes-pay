@@ -5,7 +5,7 @@ var app = express();
 var MongoUrl = process.env.MONGODB_URI || 'mongodb://db:27017/fes-pay';
 var db = require('./lib/mongo')(
       {
-        collections: ['events', 'tenants', 'users', 'cards'],
+        collections: ['events', 'tenants', 'cards'],
         mongoUri: MongoUrl
       }
     );
@@ -20,65 +20,8 @@ app.listen(app.get('port'), function() {
   console.log("Node app is running at localhost:" + app.get('port'))
 });
 
-var photoList = [
-    {
-        id: "001",
-        name: "photo001.jpg",
-        type: "jpg",
-        dataUrl: "http://localhost:3000/data/photo001.jpg"
-    },{
-        id: "002",
-        name: "photo002.jpg",
-        type: "jpg",
-        dataUrl: "http://localhost:3000/data/photo002.jpg"
-    }
-]
-
 app.get('/', function(req, res) {
-  res.render("index", {photo: photoList[0]});
-});
-
-app.get('/abc', function(req, res) {
-  res.send('you said abc');
-});
-
-app.get('/photo/:id', function(req, res) {
-  var photo;
-  for (i = 0; i < photoList.length; i++){
-    if (photoList[i].id == req.params.id){
-      var photo = photoList[i];
-    }
-  }
-  res.render('index', {photo: photo})
-});
-
-app.post('/create', function(req, res) {
-  console.log(req.body);
-  user = {};
-  user.id = 'U001';
-  user.name = req.body.name;
-  db.users.save(user);
-
-  res.send('USER saved - name:' + req.body.name);
-});
-
-app.get('/user/me', function(req, res) {
-  res.send('it\'s me');
-});
-
-app.get('/user/:id', function(req, res) {
-  db.users.get(req.params.id, function(err, user){
-    if (user) {
-      res.render('user', {user: user})
-    } else {
-      res.send('nobody');
-    }
-  });
-});
-
-
-app.get('/yeah', function(req, res) {
-  res.render('yeah', {});
+  res.render('index', {});
 });
 
 app.post('/yeah', function(req, res) {
@@ -103,7 +46,7 @@ app.post('/create_card/:card_id', function(req, res) {
   card.year = req.body.year;
   db.cards.save(card);
 
-  res.send('CARD SAVED');
+  res.render('edit_password', {card_id: req.params.card_id});
 });
 
 app.post('/update_card/:card_id', function(req, res) {
@@ -113,7 +56,16 @@ app.post('/update_card/:card_id', function(req, res) {
     card.year = req.body.year;
     db.cards.save(card);
 
-    res.send('CARD UPDATED');
+    res.render('edit_password', {card_id: req.params.card_id});
+  });
+});
+
+app.post('/update_password/:card_id', function(req, res) {
+  db.cards.get(req.params.card_id, function(err, card){
+    card.password = req.body.password;
+    db.cards.save(card);
+
+    res.send('Card saved');
   });
 });
 
@@ -122,3 +74,4 @@ app.get('/cards', function(req, res) {
     res.send(cards);
   });
 });
+

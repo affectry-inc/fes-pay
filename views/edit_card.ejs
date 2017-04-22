@@ -1,12 +1,12 @@
 <html>
 <body>
-  <h1>Save credit card for ID: <%= card_id %></h1>
+  <h1>Credit Card (No. <%= card_id %>)</h1>
 
   <form method="post" action="/<%= action %>/<%= card_id %>">
-    <label>Credit Card number</label>
+    <label>Credit card number</label>
     <input type="text" name="cardno">
     <br>
-    <label>Expiration Month</label>
+    <label>Expiration month</label>
     <input type="number" name="month">
     <br>
     <label>Expiration Year</label>

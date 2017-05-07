@@ -8,15 +8,15 @@
 
   <form method="post" action="/<%= action %>/<%= card_id %>">
     <label>クレジットカード番号</label>
-    <input type="text" name="cardno">
+    <input type="text" name="cardno" pattern="[0-9]*">
     <br>
     <label>有効期限</label>
-    <input type="number" name="month">
+    <input type="number" name="month" pattern="[0-9]*">
     /
-    <input type="number" name="year">
+    <input type="number" name="year" pattern="[0-9]*">
     <br>
     <label>セキュリティコード</label>
-    <input type="number" name="seccode">
+    <input type="number" name="seccode" pattern="[0-9]*">
     <br>
     <input type="submit" value="登録">
   </form>

@@ -65,7 +65,7 @@ app.post('/update_password/:card_id', function(req, res) {
     card.password = req.body.password;
     db.cards.save(card);
 
-    res.send('Card saved');
+    res.send('カード情報を登録しました');
   });
 });
 

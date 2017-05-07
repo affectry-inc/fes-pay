@@ -1,18 +1,24 @@
 <html>
 <body>
-  <h1>Credit Card (No. <%= card_id %>)</h1>
+  <% if (action === 'create_card') { %>
+    <h1>クレジットカード登録 (No. <%= card_id %>)</h1>
+  <% } else { %>
+    <h1>クレジットカード更新 (No. <%= card_id %>)</h1>
+  <% } %>
 
   <form method="post" action="/<%= action %>/<%= card_id %>">
-    <label>Credit card number</label>
+    <label>クレジットカード番号</label>
     <input type="text" name="cardno">
     <br>
-    <label>Expiration month</label>
+    <label>有効期限</label>
     <input type="number" name="month">
-    <br>
-    <label>Expiration Year</label>
+    /
     <input type="number" name="year">
     <br>
-    <input type="submit" value="SAVE">
+    <label>セキュリティコード</label>
+    <input type="number" name="seccode">
+    <br>
+    <input type="submit" value="登録">
   </form>
 </body>
 </html>

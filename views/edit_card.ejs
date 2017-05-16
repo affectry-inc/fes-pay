@@ -11,9 +11,17 @@
     <input type="text" name="cardno" pattern="[0-9]*">
     <br>
     <label>有効期限</label>
-    <input type="number" name="month" pattern="[0-9]*">
+    <select name="month">
+      <% for (i = 1; i <= 12; i++) { %>
+        <option value="<%= ('0' + i).slice(-2) %>"><%= ('0' + i).slice(-2) %></option>
+      <% } %>
+    </select>
     /
-    <input type="number" name="year" pattern="[0-9]*">
+    <select name="year">
+      <% for (i = 2017; i <= 2029; i++) { %>
+        <option value="<%= i %>"><%= i %></option>
+      <% } %>
+    </select>
     <br>
     <label>セキュリティコード</label>
     <input type="number" name="seccode" pattern="[0-9]*">
